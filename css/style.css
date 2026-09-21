@@ -1,7 +1,6 @@
 /* =========================================================
    Henry Oyoto — Portfolio
-   Light theme only. Three distinct visual styles for
-   Services, Projects and Skills sections.
+   Light theme only.
    ========================================================= */
 
 :root {
@@ -108,37 +107,60 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 /* =========================================================
-   HERO
+   HERO — full-width background, text only (no portrait).
+   Left side darkened (text legibility), right side lightened
+   so the background photo stays crisp & clear.
    ========================================================= */
 .hero {
   position: relative;
   min-height: 92vh;
-  display: flex; align-items: center;
-  overflow: hidden; isolation: isolate;
-}
-.hero-bg {
-  position: absolute; inset: 0;
-  background-size: cover; background-position: center;
-  transform: scale(1.03);
-}
-.hero-overlay {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(120deg, rgba(15,23,42,0.92) 0%, rgba(15,23,42,0.75) 45%, rgba(15,23,42,0.55) 100%),
-    radial-gradient(1200px 600px at 90% 30%, rgba(14,165,233,0.35), transparent 60%);
-}
-
-.hero-grid {
-  position: relative; z-index: 2;
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 60px;
+  display: flex;
   align-items: center;
-  padding: 100px 0;
-  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
 }
 
-.hero-copy { color: #fff; max-width: 640px; }
+/* The background image is now an <img> element so it always
+   resolves correctly on GitHub Pages (no inline style quotes
+   to break, no relative-path surprises). */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+
+/* Two-layer overlay:
+   - Left: strong dark gradient (text side)
+   - Right: mostly transparent (image side, crisp) */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(15, 23, 42, 0.92) 0%,
+      rgba(15, 23, 42, 0.78) 32%,
+      rgba(15, 23, 42, 0.42) 62%,
+      rgba(15, 23, 42, 0.10) 100%
+    );
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 780px;
+  padding: 110px 22px 110px max(22px, calc((100vw - 1180px) / 2 + 22px));
+  margin-right: auto;   /* pin to the left, never center */
+  margin-left: 0;
+  color: #fff;
+  text-align: left;
+}
 .eyebrow {
   font-family: "Space Grotesk", sans-serif;
   font-size: 0.78rem; font-weight: 600;
@@ -149,45 +171,16 @@ ul { margin: 0; padding: 0; list-style: none; }
 .hero h1 span { color: #7dd3fc; }
 .hero-tagline {
   margin-top: 20px; font-size: 1.05rem; font-weight: 500;
-  color: rgba(255,255,255,0.92);
+  color: rgba(255,255,255,0.95);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.35);
 }
 .hero-text {
-  margin-top: 18px; color: rgba(255,255,255,0.8);
-  line-height: 1.75; max-width: 580px;
+  margin-top: 18px; color: rgba(255,255,255,0.88);
+  line-height: 1.75; max-width: 620px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.35);
 }
 .hero-actions {
   margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap;
-}
-
-.hero-portrait {
-  position: relative;
-  justify-self: center;
-  width: 100%;
-  max-width: 420px;
-  aspect-ratio: 4 / 5;
-  border-radius: 22px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(15,23,42,0.35);
-  box-shadow: 0 30px 80px -30px rgba(0,0,0,0.75),
-              inset 0 0 0 1px rgba(255,255,255,0.06);
-  animation: floatY 6s ease-in-out infinite;
-}
-.hero-portrait img {
-  width: 100%; height: 100%; object-fit: cover; object-position: center top;
-}
-.hero-portrait::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(15,23,42,0.35) 100%);
-  pointer-events: none;
-}
-@keyframes floatY {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-10px); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-portrait { animation: none; }
 }
 
 /* =========================================================
@@ -208,9 +201,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   background: #38bdf8; transform: translateY(-2px);
   box-shadow: 0 14px 30px -14px rgba(14,165,233,1);
 }
-.btn-outline { border-color: rgba(255,255,255,0.5); color: #fff; }
+.btn-outline { border-color: rgba(255,255,255,0.55); color: #fff; }
 .btn-outline:hover {
-  border-color: #fff; background: rgba(255,255,255,0.12); transform: translateY(-2px);
+  border-color: #fff; background: rgba(255,255,255,0.15); transform: translateY(-2px);
 }
 
 /* =========================================================
@@ -231,14 +224,13 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 /* =========================================================
-   ABOUT — text LEFT, LANDSCAPE image RIGHT,
-   heights matched (grid stretches items)
+   ABOUT — text LEFT, landscape image RIGHT (equal height)
    ========================================================= */
 .about-grid {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 60px;
-  align-items: stretch;          /* <-- makes both columns equal height */
+  align-items: stretch;
 }
 .about-copy { align-self: center; }
 .about-copy h2 { margin-bottom: 18px; }
@@ -247,7 +239,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   position: relative;
   border-radius: 18px;
   overflow: hidden;
-  /* Landscape ratio + stretch to fill the grid row height */
   aspect-ratio: 16 / 10;
   width: 100%;
   height: 100%;
@@ -281,9 +272,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .about-badge strong { color: var(--accent-2); }
 
 /* =========================================================
-   SERVICES — STYLE 1
-   Classic ordered list-cards, each row = image (left) + text.
-   Image height matches the content height of its row.
+   SERVICES — image LEFT, content RIGHT
    ========================================================= */
 .services-list {
   margin-top: 44px;
@@ -293,7 +282,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .service-item {
   display: grid;
-  grid-template-columns: 220px 1fr;   /* fixed-width thumbnail column */
+  grid-template-columns: 220px 1fr;
   gap: 0;
   background: var(--card);
   border: 1px solid var(--border);
@@ -311,8 +300,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 .service-media {
   position: relative;
   background: #e2e8f0;
-  /* no aspect-ratio — the grid row decides the height and the
-     image stretches to match the text height exactly */
   min-height: 180px;
 }
 .service-media img {
@@ -338,7 +325,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .service-body h3 {
   font-size: 1.25rem;
   margin-bottom: 14px;
-  padding-right: 60px; /* room for the number */
+  padding-right: 60px;
 }
 .service-body ul {
   display: grid;
@@ -360,7 +347,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 /* =========================================================
-   PROJECTS — STYLE 2: alternating image/text rows
+   PROJECTS — alternating rows
    ========================================================= */
 .projects-stack {
   margin-top: 48px;
@@ -436,7 +423,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 /* =========================================================
-   SKILLS — STYLE 3
+   SKILLS
    ========================================================= */
 .skills-grid {
   margin-top: 48px;
@@ -589,7 +576,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .footer-col a:hover { color: #fff; }
 
-.footer-social { display: flex; gap: 12px; margin-top: 20px; }
+.footer-social { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
 .footer-social a {
   width: 40px; height: 40px;
   display: inline-flex; align-items: center; justify-content: center;
@@ -605,8 +592,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .footer-social .icon { width: 20px; height: 20px; }
 
-/* Keep brand colours on the footer icons, but lift truly-black ones
-   so they're readable against the dark footer. */
+/* Lift truly-black icons so they're readable on the dark footer */
 .footer-social .icon-github,
 .footer-social .icon-x { background-color: #e5e7eb; }
 
@@ -682,8 +668,7 @@ ul { margin: 0; padding: 0; list-style: none; }
    RESPONSIVE
    ========================================================= */
 @media (max-width: 960px) {
-  .hero-grid { grid-template-columns: 1fr; gap: 40px; padding: 80px 0 60px; }
-  .hero-portrait { max-width: 340px; aspect-ratio: 1/1; }
+  .hero-inner { max-width: 100%; padding: 90px 22px; }
 
   .about-grid { grid-template-columns: 1fr; gap: 40px; }
   .about-media { aspect-ratio: 16/10; height: auto; min-height: 0; }
