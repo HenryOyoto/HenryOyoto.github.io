@@ -94,6 +94,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   transform: scaleX(0); transform-origin: left; transition: transform 0.25s;
 }
 .nav a:hover { color: var(--ink); }
+.nav-company { color: var(--accent-2) !important; font-weight: 700 !important; }
 .nav a:hover::after { transform: scaleX(1); }
 
 .nav-toggle {
@@ -205,6 +206,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 .btn-outline:hover {
   border-color: #fff; background: rgba(255,255,255,0.15); transform: translateY(-2px);
 }
+.btn-company { background: #fff; color: var(--ink); border-color: rgba(255,255,255,0.8); }
+.btn-company:hover { background: #e0f2fe; border-color: #e0f2fe; transform: translateY(-2px); }
 
 /* =========================================================
    SECTIONS
@@ -393,6 +396,54 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-weight: 600; color: var(--accent-2); font-size: 0.9rem;
 }
 .project-row:hover .project-cta { color: var(--accent); }
+
+/* =========================================================
+   PROJECT GRID — shared visual language with DIELCHA case studies
+   ========================================================= */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 34px;
+}
+.project-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-2);
+  box-shadow: var(--shadow);
+}
+.project-card-media {
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #e2e8f0;
+}
+.project-card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.project-card:hover .project-card-media img { transform: scale(1.025); }
+.project-card-body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+.project-meta { color: var(--accent-2); font-size: .76rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 9px; }
+.project-card h3 { font-size: 1.22rem; margin-bottom: 10px; }
+.project-card-body > p:not(.project-meta) { color: var(--ink-soft); font-size: .94rem; line-height: 1.7; }
+.project-links { margin-top: auto; padding-top: 18px; }
+.project-links a { color: var(--accent-2); font-weight: 700; font-size: .9rem; }
+.project-links a:hover { text-decoration: underline; }
+.projects-note {
+  margin-top: 26px; padding: 20px 22px; border: 1px solid var(--border);
+  border-left: 4px solid var(--accent); border-radius: var(--radius-sm); background: var(--card);
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+}
+.projects-note p { color: var(--ink-soft); max-width: 760px; }
+.projects-note strong { color: var(--ink); }
+.projects-note a { color: var(--accent-2); font-weight: 700; white-space: nowrap; }
 
 /* =========================================================
    TOOLS strip
@@ -710,3 +761,55 @@ ul { margin: 0; padding: 0; list-style: none; }
   .footer-top { grid-template-columns: 1fr; }
   .contact-copy { padding: 32px 22px; }
 }
+
+@media (max-width: 900px) {
+  .projects-grid { grid-template-columns: 1fr; }
+  .projects-note { align-items: flex-start; flex-direction: column; }
+}
+@media (max-width: 760px) {
+  .nav-company { display: none; }
+}
+
+/* Quiet professional-studio references: intentionally unobtrusive on the personal portfolio. */
+.studio-note {
+  margin: 2.5rem auto 0;
+  max-width: 760px;
+  border-top: 1px solid rgba(0,0,0,.10);
+  padding-top: .9rem;
+  font-size: .82rem;
+  color: #6b7280;
+}
+.studio-note summary {
+  cursor: pointer;
+  width: fit-content;
+  color: #6b7280;
+  font-weight: 600;
+}
+.studio-note summary:hover { color: #111827; }
+.studio-note-body {
+  margin-top: .8rem;
+  padding: 1rem 1.1rem;
+  border-left: 2px solid #22c55e;
+  background: rgba(0,0,0,.025);
+  line-height: 1.7;
+}
+.studio-note-body p { margin: 0 0 .6rem; }
+.studio-note-body a { font-weight: 600; }
+.studio-footer {
+  margin: 1.2rem 0;
+  font-size: .76rem;
+  color: rgba(255,255,255,.48);
+}
+.studio-footer summary {
+  cursor: pointer;
+  width: fit-content;
+}
+.studio-footer summary:hover { color: rgba(255,255,255,.78); }
+.studio-footer-content {
+  display: flex;
+  gap: .8rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: .5rem;
+}
+.studio-footer-content a { color: inherit; }
