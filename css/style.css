@@ -927,3 +927,101 @@ ul { margin: 0; padding: 0; list-style: none; }
   .container,
   .hero-inner { max-width:95vw; }
 }
+
+
+/* =========================================================
+   HOME HERO (hx): split layout with a sliding carousel
+   Copy stays fixed on the left. The background tint, bullet list and image
+   slide in from the right, one slide at a time (see js/script.js).
+   Scoped under .hx so no other section is affected.
+   ========================================================= */
+.hx { position: relative; isolation: isolate; overflow: hidden; background: #eaf2fb; color: var(--ink); }
+
+/* One pane per slide; every pane sits to the right until it is its turn, then slides to 0 and the previous one exits left. */
+.hx-pane { transform: translateX(100%); transition: transform .8s cubic-bezier(.22, .7, .2, 1); will-change: transform; }
+.hx-pane.is-active { transform: translateX(0); }
+.hx-pane.is-left { transform: translateX(-100%); }
+.hx-pane.no-anim { transition: none; }
+
+.hx-bgs { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+.hx-bg { position: absolute; inset: 0; }
+.hx-bg--blue   { background: radial-gradient(60% 75% at 72% 50%, rgba(255,255,255,.95), rgba(255,255,255,0) 70%), linear-gradient(120deg, #eaf2fc 0%, #d1e3f7 100%); }
+.hx-bg--green  { background: radial-gradient(60% 75% at 72% 50%, rgba(255,255,255,.95), rgba(255,255,255,0) 70%), linear-gradient(120deg, #ecf7f1 0%, #cde8d9 100%); }
+.hx-bg--yellow { background: radial-gradient(60% 75% at 72% 50%, rgba(255,255,255,.95), rgba(255,255,255,0) 70%), linear-gradient(120deg, #fdf7df 0%, #f6e5a0 100%); }
+.hx-bg--peach  { background: radial-gradient(60% 75% at 72% 50%, rgba(255,255,255,.95), rgba(255,255,255,0) 70%), linear-gradient(120deg, #fff2e8 0%, #fad9bd 100%); }
+
+.hx-inner {
+  position: relative; z-index: 1; display: grid; align-items: center; gap: 1.5rem;
+  max-width: 1240px; margin: 0 auto; padding: 2rem clamp(20px, 4vw, 32px) 2.25rem;
+}
+.hx-copy { min-width: 0; }
+
+.hx-eyebrow {
+  font-family: "Space Grotesk", sans-serif; font-size: .78rem; font-weight: 600;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2); margin-bottom: 14px;
+}
+.hx-title { font-size: clamp(2.3rem, 9vw, 3rem); font-weight: 700; line-height: 1.05; letter-spacing: -.035em; color: var(--ink); }
+.hx-title span { color: var(--accent-2); }
+.hx-sub { margin-top: 1rem; font-size: clamp(1.02rem, 2.2vw, 1.22rem); font-weight: 600; line-height: 1.5; color: #3a4f63; max-width: 34rem; }
+
+/* All slides' lists share one grid cell, so the copy never changes height between slides. */
+.hx-lists { display: grid; overflow: hidden; margin-top: 1.25rem; }
+.hx-list { grid-area: 1 / 1; display: grid; gap: .45rem; align-content: start; }
+.hx-list li { position: relative; padding-left: 1.15rem; font-size: clamp(.95rem, 1.5vw, 1.06rem); font-weight: 500; line-height: 1.4; color: #2c4257; }
+.hx-list li::before { content: ""; position: absolute; left: 0; top: .55em; width: .45rem; height: .45rem; border-radius: 999px; background: var(--accent-2); }
+
+.hx-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+.hx .btn-outline { border-color: rgba(15, 23, 42, .35); color: var(--ink); background: rgba(255, 255, 255, .6); }
+.hx .btn-outline:hover { border-color: var(--ink); background: var(--ink); color: #fff; }
+
+.hx-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem .75rem; margin-top: 1.5rem; }
+.hx-arrow { display: grid; place-items: center; width: 2rem; height: 2rem; padding: 0; border: 1px solid rgba(15, 23, 42, .3); border-radius: 999px; background: rgba(255, 255, 255, .7); color: var(--ink); cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.hx-arrow:hover { border-color: var(--ink); background: var(--ink); color: #fff; }
+.hx-dots { display: flex; align-items: center; gap: .4rem; }
+.hx-dot { position: relative; width: 1.5rem; height: .4rem; padding: 0; border: 0; border-radius: 999px; background: rgba(15, 23, 42, .22); cursor: pointer; transition: width .25s, background-color .25s; }
+.hx-dot::before { content: ""; position: absolute; inset: -.8rem -.15rem; }
+.hx-dot.is-active { width: 2.75rem; background: var(--accent-2); }
+.hx-label { flex-basis: 100%; font-size: .85rem; font-weight: 600; color: #3a4f63; }
+@media (min-width: 640px) { .hx-label { flex-basis: auto; margin-left: .25rem; } }
+
+/* Images scale down as a whole (never cropped). The stage clips left and right so sliding images never cross the copy. */
+.hx-stage { position: relative; height: clamp(15rem, 82vw, 27rem); min-height: 0; clip-path: inset(-20% 0 -20% 0); }
+.hx-slide-img { position: absolute; inset: 0; display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center; }
+.hx-img { max-width: 100%; max-height: 100%; width: auto; height: auto; }
+.hx-img--cutout { filter: drop-shadow(0 26px 22px rgba(18, 52, 79, .28)); }
+.hx-img--photo { border-radius: 1.1rem; box-shadow: 0 32px 60px -30px rgba(18, 52, 79, .6), 0 0 0 1px rgba(18, 52, 79, .08); }
+
+/* Same height as the Dielcha Digilab hero: the viewport minus the header, between 32rem and 44rem. */
+@media (min-width: 900px) {
+  .hx { height: clamp(32rem, calc(100svh - 73px), 44rem); }
+  .hx-inner { height: 100%; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 3rem; padding-block: 2.5rem; }
+  .hx-title { font-size: clamp(2.6rem, 4.8vw, 4rem); }
+  .hx-stage { height: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .hx-pane { transition: none; } }
+
+/* =========================================================
+   TOOLS under the hero: scrolls left to right, pauses on hover, items blink
+   ========================================================= */
+.hx-tools { overflow: hidden; border-bottom: 1px solid var(--border); background: #fff; }
+.hx-tools__track { display: flex; width: max-content; animation: hx-tools-ltr 60s linear infinite; }
+.hx-tools:hover .hx-tools__track, .hx-tools:focus-within .hx-tools__track { animation-play-state: paused; }
+.hx-tools__list { display: flex; flex: 0 0 auto; align-items: center; margin: 0; padding: .9rem 0; }
+.hx-tool {
+  display: flex; align-items: center; gap: .5rem; padding-right: clamp(1.4rem, 3vw, 2.25rem);
+  font-family: "Space Grotesk", sans-serif; font-size: .9rem; font-weight: 700; color: #243447; white-space: nowrap;
+  animation: hx-tool-blink 2.6s ease-in-out infinite;
+}
+.hx-tools:hover .hx-tool { animation-play-state: paused; }
+.hx-tool img { width: 1.6rem; height: 1.6rem; object-fit: contain; mix-blend-mode: multiply; }
+@keyframes hx-tools-ltr { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@keyframes hx-tool-blink { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .hx-tool { animation: none; } }
+
+/* =========================================================
+   FOOTER studio line: one quiet line with a small Dielcha Digilab mark
+   ========================================================= */
+.studio-line { display: flex; align-items: center; flex-wrap: wrap; gap: .55rem; width: fit-content; margin: 1.2rem 0 0; font-size: .78rem; letter-spacing: .01em; color: rgba(255, 255, 255, .5); }
+.studio-line img { width: auto; height: .95rem; opacity: .9; }
+.studio-line a { color: rgba(255, 255, 255, .72); text-decoration: underline; text-decoration-color: rgba(255, 255, 255, .25); text-underline-offset: .22em; }
+.studio-line a:hover { color: #fff; text-decoration-color: currentColor; }

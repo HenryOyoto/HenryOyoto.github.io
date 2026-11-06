@@ -21,7 +21,6 @@
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#projects">Projects</a>
-      <a href="#tools">Tools</a>
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -31,26 +30,53 @@
   </div>
 </header>
 
-<!-- ============ HERO — full-bleed background, text LEFT-aligned ============ -->
-<section class="hero">
-  <img class="hero-bg" src="assets/images/hero-home-embedded-systems.jpg" alt="" aria-hidden="true" />
-  <div class="hero-overlay"></div>
+<!-- ============ HERO: copy on the left, slide image on the right, one tint per slide ============ -->
+<section class="hx" id="hero" aria-roledescription="carousel" aria-label="Henry Oyoto">
+  <div class="hx-bgs" aria-hidden="true">
+    <div class="hx-pane hx-bg hx-bg--blue is-active" data-slide="0"></div>
+    <div class="hx-pane hx-bg hx-bg--green" data-slide="1"></div>
+    <div class="hx-pane hx-bg hx-bg--yellow" data-slide="2"></div>
+    <div class="hx-pane hx-bg hx-bg--peach" data-slide="3"></div>
+  </div>
 
-  <div class="hero-inner">
-    <p class="eyebrow">Electrical and Computer Engineer </p>
-    <h1>Hi, I'm <span>Henry Oyoto</span></h1>
-    <p class="hero-tagline">PCB Design &nbsp;|&nbsp; Embedded Systems &nbsp;|&nbsp; Python Automation &nbsp;|&nbsp; IoT</p>
-    <p class="hero-text">
-      I design and develop electronics, embedded systems, connected devices and engineering software,
-      with supporting CAD, Python automation and technical documentation where the project requires it.
-      My work spans both hardware and software, from PCB development and embedded control to
-      scripting, data handling and office automation.
-    </p>
-    <div class="hero-actions">
-      <a href="#projects" class="btn btn-primary">View Projects</a>
-      <a href="#contact" class="btn btn-outline">Get In Touch</a>
+  <div class="hx-inner">
+    <div class="hx-copy">
+      <p class="hx-eyebrow">Electrical and Computer Engineer</p>
+      <h1 class="hx-title">Hi, I'm <span>Henry Oyoto</span></h1>
+      <p class="hx-sub">PCB design, embedded systems, Python automation and IoT</p>
+
+      <div class="hx-lists">
+      <ul class="hx-pane hx-list is-active" data-slide="0"><li>Schematic capture and PCB layout</li><li>3D board models and design-rule checks</li><li>BOMs and design review</li></ul>
+      <ul class="hx-pane hx-list" data-slide="1"><li>ESP32, Arduino and Raspberry Pi</li><li>Sensors, connectivity and monitoring</li><li>Robots, drones and connected devices</li></ul>
+      <ul class="hx-pane hx-list" data-slide="2"><li>AutoCAD and engineering drawings</li><li>3D enclosures and models</li><li>Reports and technical documentation</li></ul>
+      <ul class="hx-pane hx-list" data-slide="3"><li>IoT dashboards and monitoring</li><li>Python scripts and Excel automation</li><li>Desktop tools for repetitive tasks</li></ul>
+      </div>
+
+      <div class="hx-actions">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      </div>
+
+      <div class="hx-controls">
+        <button type="button" class="hx-arrow" data-dir="-1" aria-label="Previous slide"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg></button>
+        <div class="hx-dots"><button type="button" class="hx-dot is-active" data-go="0" aria-label="PCB Design, Layout &amp; 3D" aria-current="true"></button><button type="button" class="hx-dot" data-go="1" aria-label="Embedded Systems &amp; IoT"></button><button type="button" class="hx-dot" data-go="2" aria-label="Engineering Design &amp; CAD"></button><button type="button" class="hx-dot" data-go="3" aria-label="Dashboards &amp; Python Automation"></button></div>
+        <button type="button" class="hx-arrow" data-dir="1" aria-label="Next slide"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg></button>
+        <span class="hx-label" id="hxLabel" aria-live="polite">PCB Design, Layout &amp; 3D</span>
+      </div>
+    </div>
+
+    <div class="hx-stage">
+      <div class="hx-pane hx-slide-img is-active" data-slide="0"><img src="assets/images/hero/hero-pcb-3d.webp" alt="3D view of a multi-layer PCB layout" width="1030" height="625" fetchpriority="high" decoding="async" class="hx-img hx-img--cutout" /></div>
+      <div class="hx-pane hx-slide-img" data-slide="1"><img src="assets/images/hero/hero-embedded-scene.webp" alt="A drone, a four-wheel robot and a robotic arm built on embedded controllers" width="1480" height="1260" loading="lazy" decoding="async" class="hx-img hx-img--cutout" /></div>
+      <div class="hx-pane hx-slide-img" data-slide="2"><img src="assets/images/hero/hero-enclosure-cad.webp" alt="3D CAD model of an enclosure with a display, battery and PCB inside" width="1036" height="748" loading="lazy" decoding="async" class="hx-img hx-img--cutout" /></div>
+      <div class="hx-pane hx-slide-img" data-slide="3"><img src="assets/images/hero/hero-iot-dashboard.webp" alt="IoT monitoring dashboard showing device status, alerts and live sensor readings" width="773" height="630" loading="lazy" decoding="async" class="hx-img hx-img--photo" /></div>
     </div>
   </div>
+</section>
+
+<!-- ============ TOOLS: scrolls left to right, pauses on hover ============ -->
+<section class="hx-tools" aria-label="Tools and technologies">
+  <div class="hx-tools__track" id="toolsTrack"></div>
 </section>
 
 <!-- ============ ABOUT ============ -->
@@ -206,18 +232,6 @@
 </div>
 </section>
 
-<!-- ============ TOOLS ============ -->
-<section class="section section-alt" id="tools">
-  <div class="container">
-    <h2>Tools &amp; Technologies</h2>
-    <p class="section-lead">A practical toolkit across electronics design, embedded development, simulation and Python software.</p>
-    <div class="tools-controls" aria-label="Technology carousel controls"><button type="button" id="toolsPrev" aria-label="Scroll tools left">←</button><button type="button" id="toolsPause" aria-pressed="false">Pause motion</button><button type="button" id="toolsNext" aria-label="Scroll tools right">→</button></div>
-  </div>
-  <div class="tools-track-wrap">
-    <div class="tools-track" id="toolsTrack"></div>
-  </div>
-</section>
-
 <!-- ============ SKILLS ============ -->
 <section class="section" id="skills">
   <div class="container">
@@ -341,13 +355,10 @@
         </ul>
       </div>
     </div>
-    <details class="studio-footer">
-      <summary aria-label="Open professional studio link">Studio ↗</summary>
-      <div class="studio-footer-content">
-        <span>Selected professional work is also developed through <strong>DIELCHA DIGILAB</strong>.</span>
-        <a href="https://dielchadigilab.netlify.app" target="_blank" rel="noreferrer">Dielcha Digilab ↗</a>
-      </div>
-    </details>
+    <p class="studio-line">
+      <img src="assets/icons/dielcha-logo.svg" alt="" width="22" height="15" />
+      <span>Part of the lead engineering team at <a href="https://dielchadigilab.netlify.app" target="_blank" rel="noreferrer">Dielcha Digilab</a></span>
+    </p>
     <div class="footer-bottom">
       <span>© <span id="year"></span> Henry Oyoto. All rights reserved.</span>
     </div>
